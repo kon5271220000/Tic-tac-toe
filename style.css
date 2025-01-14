@@ -1,0 +1,56 @@
+.container {
+    display: grid;
+    gap: 30px;
+    font-family: 'Montserrat';
+    justify-content: center;
+}
+
+.container h1 {
+    text-align: center;
+}
+
+.score_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.player_score_1 {
+    display: grid;
+    border: 2px solid red;
+}
+
+.player_score_2 {
+    display: grid;
+    border: 2px solid blue;
+}
+
+.score_container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+
+.board {
+    display: grid;
+    width: 320px;
+    height: 320px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px;
+}
+.cell {
+    background-color: lightcyan;
+    width: 100px;
+    height: 100px;
+    font-family: 'Montserrat';
+    font-weight: bold;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell:hover {
+    background-color: cyan;
+}
