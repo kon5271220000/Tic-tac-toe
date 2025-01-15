@@ -5,7 +5,11 @@ function CreateUser(name, marker){
         player_score++
     }
 
-    return {name, marker, player_score, increase_score}
+    function getPlayerScore(){
+        return player_score
+    }
+
+    return {name, marker, getPlayerScore, increase_score}
 }
 
 function CreateBoard(){
@@ -58,7 +62,7 @@ function CreateBoard(){
 function CreateGame() {
     const gameBoard = CreateBoard()
     let gameOVer = false
-    const players = []
+    let players = []
     let currenPlayerIndex = 0
 
 
@@ -78,29 +82,23 @@ function CreateGame() {
     }
 
     function handleUserInput(index) {
-        if(gameBoard.getBoard()[index] === ""){
+        if(gameBoard.getBoard()[index] === "" && !gameOVer){
             gameBoard.setCell(index, players[currenPlayerIndex].marker)
             gameBoard.drawBoard()
 
             if(checkWin()){
-                console.log(`${players[currenPlayerIndex].name} win!`)
                 players[currenPlayerIndex].increase_score()
                 showScore()
-                gameOVer = false
+                document.getElementById("anouncement").textContent = `${players[currenPlayerIndex].name} win`
+                gameOVer = true
             }
             else if(checkDraw()){
-                console.log('Draw')
-                gameOVer = false
+                document.getElementById("anouncement").textContent = "Draw!"
+                gameOVer = true
             }
             else{
                 currenPlayerIndex = 1 - currenPlayerIndex
-            }
-
-            if(gameOVer){
-                const choice = prompt("Do you want to play again (Y/N)?: ")
-                if(choice === "y"){
-                    gameRestart()
-                }
+                document.getElementById("anouncement").textContent = `${players[currenPlayerIndex].name} turn!`
             }
         }
         else{
@@ -155,28 +153,43 @@ function CreateGame() {
     function gameRestart(){
         gameOVer = false
         currenPlayerIndex = 0
+        document.getElementById("anouncement").textContent = ""
         gameBoard.resetBoard()
         gameBoard.drawBoard()
     }
 
-    function showScore(){
-        document.getElementById("score_1").textContent = players[0].player_score
-        document.getElementById("score_2").textContent = players[1].player_score
+    function newGame(){
+        players = []
+        getPlayer()
+        showScore()
+        gameRestart()
     }
 
-    return{gameBoard, getPlayer, players, handleUserInput, clickBoard, gameRestart}
+    function showScore(){
+        document.getElementById("score_1").textContent = players[0].getPlayerScore()
+        document.getElementById("score_2").textContent = players[1].getPlayerScore()
+    }
+
+    return{gameBoard, getPlayer, players, handleUserInput, clickBoard, gameRestart, newGame, showScore}
 }
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const game = CreateGame();
+    const game = CreateGame()
     game.getPlayer()
+    game.gameBoard.resetBoard()
     game.gameBoard.drawBoard()
+
     game.clickBoard()
     
+
     document.getElementById("restart").addEventListener('click', () => {
         game.gameRestart()
+    })
+
+    document.getElementById("newGame").addEventListener('click', () => {
+        game.newGame()
     })
 
     document.getElementById("score_1").textContent = game.players[0].player_score

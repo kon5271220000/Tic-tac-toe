@@ -1,8 +1,11 @@
+
 .container {
     display: grid;
     gap: 30px;
     font-family: 'Montserrat';
     justify-content: center;
+    justify-items: center;
+    height: 80vh;
 }
 
 .container h1 {
@@ -18,11 +21,15 @@
 .player_score_1 {
     display: grid;
     border: 2px solid red;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .player_score_2 {
     display: grid;
     border: 2px solid blue;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .score_container img {
@@ -53,4 +60,17 @@
 
 .cell:hover {
     background-color: cyan;
+}
+
+button {
+    font-size: 16px;
+    font-weight: bold;
+    width: 128px;
+    height: 48px;
+    border: 2px none;
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: blueviolet;
 }
